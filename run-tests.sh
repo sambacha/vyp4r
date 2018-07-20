@@ -2,9 +2,10 @@
 
 ANTLR_JAR="antlr4.jar"
 
-GRAMMAR="Solidity"
-START_RULE="sourceUnit"
-TEST_FILE="test.sol"
+GRAMMAR="Vyper"
+START_RULE="sourceUnit"k
+TEST_FILE="crowdfund.vy"
+# TEST_FILES_DIR="./vyper/examples/"
 ERROR_PATTERN="mismatched|extraneous"
 
 if [ ! -e "$ANTLR_JAR" ]; then
@@ -18,5 +19,5 @@ java -jar $ANTLR_JAR $GRAMMAR.g4 -o src/
 # Generates a lot of files with names like `SolidityParser$PragmaValueContext.class` in /target dir
 javac -classpath $ANTLR_JAR src/*.java -d target/
 
-# java -classpath $ANTLR_JAR:target/ org.antlr.v4.gui.TestRig "$GRAMMAR" "$START_RULE" < "$TEST_FILE" 2>&1 |
-#   grep -qE "$ERROR_PATTERN" && echo "TESTS FAIL!" || echo "TESTS PASS!"
+java -classpath $ANTLR_JAR:target/ org.antlr.v4.gui.TestRig "$GRAMMAR" "$START_RULE" < "$TEST_FILE" 2>&1 |
+   grep -qE "$ERROR_PATTERN" && echo "TESTS FAIL!" || echo "TESTS PASS!"
