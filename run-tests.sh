@@ -13,8 +13,10 @@ fi
 
 mkdir -p target/
 
+# Generates some build files; *.tokens and *.java in /src/ dir
 java -jar $ANTLR_JAR $GRAMMAR.g4 -o src/
+# Generates a lot of files with names like `SolidityParser$PragmaValueContext.class` in /target dir
 javac -classpath $ANTLR_JAR src/*.java -d target/
 
-java -classpath $ANTLR_JAR:target/ org.antlr.v4.gui.TestRig "$GRAMMAR" "$START_RULE" < "$TEST_FILE" 2>&1 |
-  grep -qE "$ERROR_PATTERN" && echo "TESTS FAIL!" || echo "TESTS PASS!"
+# java -classpath $ANTLR_JAR:target/ org.antlr.v4.gui.TestRig "$GRAMMAR" "$START_RULE" < "$TEST_FILE" 2>&1 |
+#   grep -qE "$ERROR_PATTERN" && echo "TESTS FAIL!" || echo "TESTS PASS!"
