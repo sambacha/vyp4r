@@ -3,7 +3,7 @@
 ANTLR_JAR="antlr4.jar"
 
 GRAMMAR="Vyper"
-START_RULE="sourceUnit"k
+START_RULE="sourceUnit"
 TEST_FILE="crowdfund.vy"
 # TEST_FILES_DIR="./vyper/examples/"
 ERROR_PATTERN="mismatched|extraneous"
