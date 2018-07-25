@@ -17,26 +17,49 @@ grammar Vyper;
 
 //https://github.com/ethereum/vyper/blob/54b8dc06f258eb0e1815ea222eb5f875aae443f2/vyper/parser/parser.py#L326
 
-// each file is a contract, even an empty file. 
+// each file is a contract, even an empty file. BUt antlr does not support emptiness very well.
 sourceUnit
-  : ( contractDefinition )* EOF ;
+  : ( contractDefinition ) EOF ;
 
 contractDefinition
-  : ( stateVariableDeclaration ) ;
-//  | interfaceDefinition ) * 
-//  | unitTypeDeclaration 
-//  | eventDefinition 
-//  | storageVarDefinition 
-//  | functionDefinition )* ;
+  // vyper enforces the order of these sections. Although it's possible in vyper to have any empty file,
+  // antlr doesn't support it well. Thus we require atleast a functionDefinition
+  : customUnitDeclarations *
+  interfaceDefinition *
+  stateVariableDeclaration *
+  eventDefinition *
+  storageVarDefinition *
+  functionDefinition +
+  ;
 
+/* sourceUnit:interfaceDefinition */
+customUnitDeclarations
+  : 'unit' ':' '{'
+    customUnitDeclaration
+    (',' customUnitDeclaration) *
+  '}'
+  ;
+
+customUnitDeclaration
+  : Identifier ':' StringLiteral
+  ;
+
+/* sourceUnit:interfaceDefinition */
+interfaceDefinition
+  : Identifier ;
+
+
+/* sourceUnit:stateVariableDeclaration */
 stateVariableDeclaration
-  : ( valueTypeDeclaration | referenceTypeDeclaration ) ;
+  : Identifier ':' 'public('? type ')'? ;
 
-valueTypeDeclaration
-    : Identifier ':' 'public('? valueTypeName ')'? ;
+type
+  : referenceType
+  | valueType
+  ;
 
 // https://vyper.readthedocs.io/en/latest/types.html
-valueTypeName
+valueType
   : 'bool' 
   | 'int128' 
   | 'uint256' 
@@ -47,18 +70,70 @@ valueTypeName
   | 'bytes[' DecimalNumber ']'
   ;
 
-referenceTypeDeclaration
-  : valueTypeName '[' valueTypeName ']' // mapping
-  ;
-
 unitType
   :  (  'timestamp' | 'timedelta' | 'wei_value' | customUnitType )  
   ;
 
 customUnitType
-  : Identifier
+  // QUESTION: Should a grammer requre that the unit is defined above? 
+  : Identifier 
   ;
 
+
+referenceType
+  : structType
+  | mappingType
+  | listType
+  | tupleType
+  ;
+
+
+structType
+  : '{' Identifier ':' valueType (',' Identifier ':' valueType)* '}'
+  ;
+
+mappingType
+  : type '[' valueType ']' // mapping
+  ;
+
+listType
+  : valueType '[' IntegerNumber ']'
+  ;
+
+tupleType
+  : '(' type (',' type)* ')'
+  ;
+
+
+/* sourceUnit:eventDefinition */
+eventDefinition
+  : Identifier ':' 'event' eventParameterList
+  ;
+
+eventParameterList
+  : '(' '{' eventParameter (',' eventParameter)* '}' ')'
+  ;
+
+eventParameter
+  : Identifier ':' ('indexed(' valueType ')' ) | valueType
+  ;
+
+/* sourceUnit:storageVarDefinition */
+storageVarDefinition
+  : Identifier ;
+
+/* sourceUnit:functionDefinition */
+functionDefinition
+  : Identifier ;
+
+
+/* Terminal Tokens */
+StringLiteral
+  : '"' DoubleQuotedStringCharacter* '"'
+  ;
+
+DoubleQuotedStringCharacter
+  : ~["\r\n\\] | ('\\' .) ;
 
 Identifier
   : IdentifierStart IdentifierPart* ;
@@ -71,5 +146,18 @@ fragment
 IdentifierPart
   : [a-zA-Z0-9$_] ;
 
+IntegerNumber
+  : [1-9][0-9]+
+  ;
+
 DecimalNumber
   : [0-9]+ ( '.' [0-9]* )? ( [eE] [0-9]+ )? ;
+
+/* Whitespace */
+// This will need to be enhanced to handle pythonic indentation blocks.
+// good example: https://github.com/antlr/grammars-v4/blob/master/python2/Python2.g4#L376
+WS
+  : ([\t\r\n\u000C] | ' ' )+ -> skip ;
+
+LINE_COMMENT
+  : '#' ~[\r\n]* -> channel(HIDDEN) ;

@@ -354,6 +354,10 @@ BooleanLiteral
 DecimalNumber
   : [0-9]+ ( '.' [0-9]* )? ( [eE] [0-9]+ )? ;
 
+IntegerNumber
+  : [1-9][0-9]+
+
+
 HexNumber
   : '0x' HexCharacter+ ;
 
