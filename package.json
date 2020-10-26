@@ -1,0 +1,23 @@
+{
+  "name": "vyper-antlr4",
+  "version": "0.0.5",
+  "description": "[![Build Status](https://travis-ci.org/solidityj/solidity-antlr4.svg?branch=master)](https://travis-ci.org/solidityj/solidity-antlr4)",
+  "main": "antlr4.settings.json",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sambacha/vyp4r.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sambacha/vyp4r/issues"
+  },
+  "homepage": "https://github.com/sambacha/vyp4r#readme"
+}

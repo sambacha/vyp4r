@@ -1,13 +1,21 @@
-# solidity-antlr4
+# Vyp4r - ANTLR4 for Vyper Language
 
-[![Build Status](https://travis-ci.org/solidityj/solidity-antlr4.svg?branch=master)](https://travis-ci.org/solidityj/solidity-antlr4)
+## Overview
 
-Solidity grammar for ANTLR4
+- Experimental
 
-## Author
+## Usage
 
-Federico Bond ([@federicobond](https://github.com/federicobond))
+- Once Not Experimental
 
-## License
+## Contributors
 
-MIT
+[Maurelian](https://github.com/maurelian)
+<br>
+
+[Sam Bacha](https://github.com/sambacha)
+
+Original Solidity ANTLR4
+Gonçalo Sá (@gnsps)
+
+Federico Bond (@federicobond)

@@ -1,0 +1,78 @@
+// Vyper.ebnf grammar - 2020/10/25
+sourceUnit
+         ::= contractDefinition EOF
+contractDefinition
+         ::= customUnitDeclarations* interfaceDefinition* stateVariableDeclaration* eventDefinition* storageVarDefinition* functionDefinition+
+customUnitDeclarations
+         ::= 'unit' ':' '{' customUnitDeclaration ( ',' customUnitDeclaration )* '}'
+customUnitDeclaration
+         ::= Identifier ':' StringLiteral
+interfaceDefinition
+         ::= Identifier
+stateVariableDeclaration
+         ::= Identifier ':' 'public('? type ')'?
+type     ::= referenceType
+           | valueType
+valueType
+         ::= 'bool'
+           | 'int128'
+           | 'uint256'
+           | 'decimal'
+           | 'address'
+           | unitType
+           | 'bytes32'
+           | 'bytes[' DecimalNumber ']'
+unitType ::= 'timestamp'
+           | 'timedelta'
+           | 'wei_value'
+           | customUnitType
+customUnitType
+         ::= Identifier
+referenceType
+         ::= structType
+           | mappingType
+           | listType
+           | tupleType
+structType
+         ::= '{' Identifier ':' valueType ( ',' Identifier ':' valueType )* '}'
+mappingType
+         ::= type '[' valueType ']'
+listType ::= valueType '[' IntegerNumber ']'
+tupleType
+         ::= '(' type ( ',' type )* ')'
+eventDefinition
+         ::= Identifier ':' 'event' eventParameterList
+eventParameterList
+         ::= '(' '{' eventParameter ( ',' eventParameter )* '}' ')'
+eventParameter
+         ::= Identifier ':' 'indexed(' valueType ')'
+           | valueType
+storageVarDefinition
+         ::= Identifier
+functionDefinition
+         ::= Identifier
+_        ::= WS
+           | LINE_COMMENT
+          /* ws: definition */
+
+<?TOKENS?>
+
+StringLiteral
+         ::= '"' DoubleQuotedStringCharacter* '"'
+DoubleQuotedStringCharacter
+         ::= [^"\#xd#xa]
+           | '\' .
+Identifier
+         ::= IdentifierStart IdentifierPart*
+IdentifierStart
+         ::= [a-zA-Z$_]
+IdentifierPart
+         ::= [a-zA-Z0-9$_]
+IntegerNumber
+         ::= [1-9] [0-9]+
+DecimalNumber
+         ::= [0-9]+ ( '.' [0-9]* )? ( [eE] [0-9]+ )?
+WS       ::= [ #x9#xd#xa#x000C]+
+LINE_COMMENT
+         ::= '#' [^#xd#xa]*
+EOF      ::= $

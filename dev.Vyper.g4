@@ -161,23 +161,3 @@ WS
 
 LINE_COMMENT
   : '#' ~[\r\n]* -> channel(HIDDEN) ;
-
-
-ReservedKeyword
-  : 'abstract'
-  | 'after'
-  | 'case'
-  | 'catch'
-  | 'default'
-  | 'final'
-  | 'in'
-  | 'inline'
-  | 'let'
-  | 'match'
-  | 'null'
-  | 'of'
-  | 'relocatable'
-  | 'static'
-  | 'switch'
-  | 'try'
-  | 'typeof' ;

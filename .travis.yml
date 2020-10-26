@@ -1,2 +1,5 @@
+os: linux
+dist: xenial
+
 language: java
 script: ./run-tests.sh
