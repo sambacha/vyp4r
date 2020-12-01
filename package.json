@@ -1,7 +1,6 @@
 {
   "name": "vyper-antlr4",
   "version": "0.0.5",
-  "description": "[![Build Status](https://travis-ci.org/solidityj/solidity-antlr4.svg?branch=master)](https://travis-ci.org/solidityj/solidity-antlr4)",
   "main": "antlr4.settings.json",
   "directories": {
     "doc": "docs",
@@ -14,10 +13,29 @@
     "type": "git",
     "url": "git+https://github.com/sambacha/vyp4r.git"
   },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.2.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "tslint": "5.19.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "3.6.2",
+    "yarn": "^1.17.3"
+  },
   "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sambacha/vyp4r/issues"
   },
-  "homepage": "https://github.com/sambacha/vyp4r#readme"
+  "homepage": "https://github.com/sambacha/vyp4r#readme",
+  "keywords": []
 }
