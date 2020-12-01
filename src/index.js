@@ -1,6 +1,6 @@
 const antlr4 = require('./antlr4/index')
-const { VyperLexer } = require('./lib/VyperLexer')
-const { VyperParser } = require('./lib/VyperParser')
+const { VyperLexer } = require('./src/VyperLexer')
+const { VyperParser } = require('./src/VyperParser')
 const ASTBuilder = require('./ASTBuilder')
 const ErrorListener = require('./ErrorListener')
 const { buildTokenList } = require('./tokens')

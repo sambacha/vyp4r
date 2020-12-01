@@ -7,13 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate-parser": "antlr4-tool -o parser Vyper.g4"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sambacha/vyp4r.git"
   },
   "devDependencies": {
+    "antlr4-tool": "^1.1.1",
     "babel-cli": "^6.26.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-preset-env": "^1.7.0",
@@ -37,5 +38,9 @@
     "url": "https://github.com/sambacha/vyp4r/issues"
   },
   "homepage": "https://github.com/sambacha/vyp4r#readme",
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "@types/antlr4": "^4.7.2",
+    "antlr4": "^4.9.0"
+  }
 }
